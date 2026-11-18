@@ -1,0 +1,776 @@
+app:
+  description: 'XGMC・GMC・CGMC(アプレシア)/GM3200・GM100(NEC)・光モジュールの登録資料に基づき、出典付きで質問に回答する社内Q&Aアプリ(ver4.6: 光モジュール比較の出典改善、バージョン質問で参照が無い場合は「関連記載なし」)'
+  icon: 📗
+  icon_background: '#E4FBCC'
+  icon_type: emoji
+  mode: advanced-chat
+  name: XGMC・GM3200 質問応答 ver4.6
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.22@88c295aff1ea52ea6ab56e3869ee37702d91f7b678c547254cf2b48271c8e81f
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables:
+  - description: 聞き返し中の質問(足りない情報だけを入力されたときに結合する)
+    id: eb9101b8-6dea-51cc-8e03-2632ea34d2f1
+    name: pending_question
+    selector:
+    - conversation
+    - pending_question
+    value: ''
+    value_type: string
+  - description: 直前の話題の型番(「この機器」などの確認に使用)
+    id: ae7d356f-066f-5605-bd08-170576b70130
+    name: last_model
+    selector:
+    - conversation
+    - last_model
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 500
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: XGMC・GMC・CGMC(アプレシア)/GM3200・GM100(NEC)のメディアコンバーターと光モジュールについて、登録資料(マニュアル・仕様書)を根拠に出典(元ファイル名とページ)付きでお答えします。装置名・型番を含めて質問してください。例:「XGMC-2016の消費電力を教えてください」
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - XGMC-2016で装置全体の状態を確認するコマンドを教えてください
+    - GM3200のCTRL盤の交換手順を教えてください
+    - H-LX40-SFPの送信波長を教えてください
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: knowledge-retrieval
+      id: 1004-false-1011-target
+      source: '1004'
+      sourceHandle: 'false'
+      target: '1011'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: knowledge-retrieval
+      id: 1011-source-1012-target
+      source: '1011'
+      sourceHandle: source
+      target: '1012'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: knowledge-retrieval
+      id: 1012-source-1013-target
+      source: '1012'
+      sourceHandle: source
+      target: '1013'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: knowledge-retrieval
+      id: 1013-source-1014-target
+      source: '1013'
+      sourceHandle: source
+      target: '1014'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1014-source-1020-target
+      source: '1014'
+      sourceHandle: source
+      target: '1020'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1020-source-1030-target
+      source: '1020'
+      sourceHandle: source
+      target: '1030'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1030-source-1040-target
+      source: '1030'
+      sourceHandle: source
+      target: '1040'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1002-source-1003-target
+      source: '1002'
+      sourceHandle: source
+      target: '1003'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: if-else
+      id: 1003-source-1004-target
+      source: '1003'
+      sourceHandle: source
+      target: '1004'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1001-source-1002-target
+      source: '1001'
+      sourceHandle: source
+      target: '1002'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1004-true-1005-target
+      source: '1004'
+      sourceHandle: 'true'
+      target: '1005'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1040-source-1050-target
+      source: '1040'
+      sourceHandle: source
+      target: '1050'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 75
+      id: '1001'
+      position:
+        x: 40
+        y: 300
+      positionAbsolute:
+        x: 40
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import json\nimport re\ntry:\n    import unicodedata\nexcept Exception:  # サンドボックスで利用できない場合は全角英数記号のみ半角化する\n    class unicodedata:\n        @staticmethod\n        def normalize(form, s):\n            return \"\".join(chr(ord(c) - 0xFEE0) if 0xFF01 <= ord(c) <= 0xFF5E else (\" \" if c == \"\\u3000\" else c) for c in s)\n\n# ============================================================\n# 前処理・入力判定(Dify コードノード)\n#   入力 : query(利用者の入力) / pending(前回の聞き返し内容) / last_model(直前の話題の型番)\n#   出力 : route = \"fixed\"(固定文で回答) | \"rag\"(ナレッジ検索して回答)\n#          fixed_answer / plan_json / q1〜q4(検索クエリ) / new_pending / new_last_model\n# 型番判定・登録資料にない情報・用途外・日本語の誤りなどは LLM に任せず、ここで決定的に判定する\n# ============================================================\n\nNOT_FOUND = \"登録資料に記載が見つかりませんでした。原本のマニュアルを確認してください。\"\n\n# ---- 登録資料に記載のある型番(ナレッジ 01/02/03 の資料名・本文から抽出) ----\nAPRESIA = [\n    \"XGMC-2016\", \"XGMC-2001L\", \"XGMC-2001LDW\", \"XGMC-2001LSS\", \"XGMC-2101X\", \"XGMC-2101X-PSR\",\n    \"XGMC-2101LDW\", \"XGMC-2101LDW-PSR\", \"GMC-2001\", \"GMC-2101\", \"GMC-2101-PSR\", \"GMC-2201\",\n    \"CGMC-2101LDW\", \"CGML-2001VLT\", \"CGML-2001VLT-P\", \"CGML-2101LDW\", \"XGML-2001L\", \"XGML-2001LDW\",\n    \"XGML-2001VLT\", \"XGML-2001VLT2\", \"XGML-2001X\", \"XGML-2101X\", \"XGML-2101LDW\", \"XGML-2101LX\",\n    \"X2L-G2001\", \"X2L-G2201\", \"XGAL-2002PB\", \"XGAL-2102PB\", \"XGMU-SNMP\",\n    \"OPL-3002CW\", \"OPL-3008DW\", \"OPL-3016DW\", \"OPL-3104DW\", \"OPL-3108DW\", \"OPL-4008DW\", \"OPL-5008DW\",\n    \"OPX-3016DW\", \"OPX-4140DW\", \"PSU-850-AC\", \"PSU-850-DC48V\",\n]\nNEC = [\n    \"GM3200\", \"ME3200\", \"GM100\", \"ME100\", \"GM100X-R\", \"GM100TR-R\", \"GM100T-R\", \"GM100X-R201\",\n    \"GM100T-R201\", \"GM100X\", \"GM100TR\", \"GM100T\", \"ME100R\", \"ME100-R\", \"ME100R1\", \"ME100-R1\", \"ME100R-201\",\n]\nMODULES = [\n    \"H-LX40-SFP\", \"H-LX80-SFP\", \"H-SX-SFP\", \"H-LX-SFP\", \"H-SX-SFP-A\", \"H-T-SFP\", \"BX80-SFP\",\n    \"H-BX80-SFP\", \"H-BX120-SFP\", \"H-BX80A-SFP\", \"H-BX20-SFP\", \"H-BX40-SFP\", \"H-BX60-SFP\", \"H-DW-SFP\",\n    \"H-DW-SFP-A\", \"LR-XFP\", \"H-LR-XFP\", \"H-SR-XFP\", \"H-ER-XFP\", \"H-DW-XFP\", \"A-EDFA_BP-XFP\",\n    \"A-EDFA_PP-XFP\", \"10G-LR-SFP+\", \"10G-SR-SFP+\", \"H-LR4-QSFP28\", \"H-SR4-QSFP28\", \"QSFP28-100G-LR4\",\n    \"H-LR4-CFP4\", \"H-DW-CFP2\", \"HTR6534BNR\",\n    \"H-BR60-SFP+D\", \"H-BR60-SFP+U\", \"H-BR60-SFP\", \"H-BR40A-SFP+D\", \"H-BR40A-SFP+U\", \"H-BR40A-SFP\",\n    \"H-BX40-D\", \"H-BX40-U\", \"H-BX80-D\", \"H-BX80-U\", \"H-BX80A-D1\", \"H-BX80A-U1\",\n    \"H-BX120-D\", \"H-BX120-U\", \"H-BX60-D\", \"H-BX60-U\", \"H-LX80\", \"H-DW2-CFP2\",\n    \"NLPHQSFP28-ZR4\", \"FOG8821-CE1\", \"FOG8821-TE1\", \"FOG8841-CE1\", \"FOG8841-TE1\",\n    \"FOG8881-CE1\", \"FOG8881-TE1\", \"TR-DX12B-M00\", \"TR-DX33B-M00\", \"A-EDFA/PP-XFP\",\n]\nFAMILIES = [\"XGMC\", \"GMC\", \"CGMC\", \"XGML\", \"CGML\", \"APRESIA\", \"GM3200シリーズ\", \"XGMCシリーズ\"]\nKNOWN = {m.upper(): m for m in APRESIA + NEC + MODULES}\nMODULE_SET = {m.upper() for m in MODULES}\nNEC_SET = {m.upper() for m in NEC}\n\n# 型番の数字部分 → 候補(「2001の仕様」のような曖昧入力の聞き返し用)\nDIGIT_INDEX = {}\nfor _m in APRESIA + NEC:\n    for _d in re.findall(r\"\\d{3,4}\", _m):\n        DIGIT_INDEX.setdefault(_d, [])\n        if _m not in DIGIT_INDEX[_d]:\n            DIGIT_INDEX[_d].append(_m)\n\n# ---- 日本語の誤変換・脱字(よくある誤り → 正しい語) ----\nTYPO = {\n    \"商品電力\": \"消費電力\", \"消費電略\": \"消費電力\", \"消費電カ\": \"消費電力\", \"交感\": \"交換\", \"交歓\": \"交換\",\n    \"波調\": \"波長\", \"破長\": \"波長\", \"仕用\": \"仕様\", \"使用書\": \"仕様書\", \"確忍\": \"確認\", \"状体\": \"状態\",\n    \"手准\": \"手順\", \"質料\": \"質量\", \"設定置\": \"設定値\",\n}\nKATAKANA_TERMS = [\n    \"コマンド\", \"レベル\", \"モジュール\", \"ファームウェア\", \"バージョン\", \"アラーム\", \"インタフェース\",\n    \"インターフェース\", \"ポート\", \"ラインカード\", \"マニュアル\", \"アッテネーター\", \"トランシーバー\",\n    \"リリースノート\", \"ログイン\", \"パスワード\", \"メンテナンス\", \"スイッチ\", \"ケーブル\", \"コンソール\",\n]\nKATAKANA_OK = set(KATAKANA_TERMS) | {\n    \"ログ\", \"カード\", \"ファン\", \"ユニット\", \"レーザ\", \"レーザー\", \"ページ\", \"ファイル\", \"アップ\", \"ダウン\",\n    \"リンク\", \"パス\", \"スルー\", \"シート\", \"エラー\", \"フレーム\", \"テスト\", \"ループ\", \"リモート\", \"ローカル\",\n    \"ユーザー\", \"ユーザ\", \"グリッド\", \"アンプ\", \"パワー\", \"モニター\", \"ダウンロード\", \"アップロード\",\n    \"リブート\", \"トラップ\", \"ツリー\", \"フロー\", \"シリーズ\", \"メディアコンバーター\", \"メディアコンバータ\",\n    \"ネットワーク\", \"サーバー\", \"サーバ\", \"コンフィグ\", \"ステータス\", \"サポート\", \"コミュニティ\",\n    \"コミュニティー\", \"クラウド\", \"ラック\", \"フル\", \"セット\", \"タイプ\", \"サイズ\", \"カタログ\", \"ライン\",\n    \"アップ\", \"チューナブル\", \"チューナーブル\", \"ブースター\", \"モード\", \"データ\", \"システム\", \"プロンプト\",\n}\n\nASPECTS = [\n    # (正規表現, 検索用の追加キーワード)\n    (r\"皮相電力\", \"皮相電力 VA 消費電力 標準仕様書\"),\n    (r\"消費電力|電力|power consumption|power\", \"消費電力 最大消費電力 主要諸元 標準仕様書\"),\n    (r\"質量|重量|重さ|weight|mass\", \"質量 概算質量 重量 kg 主要諸元\"),\n    (r\"寸法|サイズ\", \"寸法 外形寸法 mm\"),\n    (r\"送信波長|波長|wavelength\", \"送信波長 nm 伝送特性\"),\n    (r\"光規格値|光規格\", \"光規格値 受信 送信 dBm 波長 機器仕様一覧 コネクタ モジュール\"),\n    (r\"光送信レベル|送信レベル|光レベル|光出力\", \"光送信レベル 光受信レベル dBm 伝送特性\"),\n    (r\"伝送距離|距離\", \"伝送距離 光送信レベル 光受信レベル\"),\n    (r\"ログ|log\", \"ログ show log\"),\n    (r\"状態|ステータス|status\", \"状態 表示 show status show diagnosis 運用状態\"),\n    (r\"CTRL盤|制御盤\", \"制御盤 CTRL盤 CTRL1\"),\n    (r\"交換\", \"交換 挿入 抜去 MNT スイッチ PKGの追加・削除・交換\"),\n    (r\"盤の種類|実装できる盤|装置構成|実装できるカード|カード|盤の構成\", \"実装 盤 CH盤 制御盤 電源盤 品名 構成\"),\n    (r\"ラインカード\", \"ラインカード 搭載 スロット 標準仕様書\"),\n    (r\"SEND\", \"SEND 暫定対処 ATT アッテネーター 光出力 tx-attenuator\"),\n    (r\"ATT|アッテネーター|減衰\", \"ATT アッテネーター tx-attenuator SEND 暫定対処\"),\n    (r\"MIB\", \"MIB MIBツリー MIB仕様\"),\n    (r\"障害|切り分け|トラブル\", \"障害対策 トラブルシュート 保守 LED\"),\n    (r\"XFP\", \"XFP 対応XFP型式 H-LR-XFP H-SR-XFP H-ER-XFP\"),\n    (r\"SFP\", \"SFP SFPモジュール 光トランシーバ\"),\n    (r\"手順書|交換編|FTP編\", \"GM3200ファームウェア 更新手順 CTRL盤交換 バージョンアップ手順書\"),\n    (r\"機器仕様一覧\", \"機器仕様一覧 付録(機器仕様) 装置名 消費電力 光規格値\"),\n    (r\"リリースノート|バージョン|Ver|ver\", \"リリース情報 機能追加 機能 Ver リリースノート\"),\n    (r\"ファームウェア|ダウンロード|download\", \"ファームウェア system-download ダウンロード\"),\n    (r\"SNMP|コミュニティ\", \"SNMP community コミュニティー名 初期設定\"),\n    (r\"警報転送|S6|S7\", \"警報転送 SEND RLDN S6 S7 リンクパススルー\"),\n    (r\"違い|比較|差分\", \"概要 仕様 特長\"),\n    (r\"コマンド|command\", \"コマンド 構文\"),\n    (r\"取扱説明書|取説|仕様書|資料\", \"取扱説明書 標準仕様書 マニュアル\"),\n]\nDEVICE_ASPECT = (\n    r\"消費電力|電力|質量|重量|重さ|寸法|ポート|コマンド|ログ|状態|波長|伝送距離|距離|仕様|設定|手順|交換|LED|\"\n    r\"アラーム|レベル|盤|カード|構成|MIB|規格|power|weight|command\"\n)\nDOC_REF = r\"機器仕様一覧|資料|手順書|仕様書|取扱説明書|取説|マニュアル|登録されている|一覧|どこに|何ページ\"\n\n\ndef nfkc(s):\n    s = unicodedata.normalize(\"NFKC\", s or \"\")\n    s = re.sub(r\"(?<=[A-Za-z0-9])[‐‑‒–—―−ー](?=[A-Za-z0-9])\", \"-\", s)\n    s = re.sub(r\"\\b(XGMC|CGMC|XGML|CGML|GMC|OPL|OPX)\\s?(\\d{4})\", r\"\\1-\\2\", s, flags=re.I)\n    s = re.sub(r\"\\b(GM|ME)-(\\d{3,4})\\b\", r\"\\1\\2\", s, flags=re.I)\n    return s.strip()\n\n\ndef dl(a, b):\n    # Damerau-Levenshtein 距離(型番の誤り判定用)\n    a, b = a.upper(), b.upper()\n    d = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]\n    for i in range(len(a) + 1):\n        d[i][0] = i\n    for j in range(len(b) + 1):\n        d[0][j] = j\n    for i in range(1, len(a) + 1):\n        for j in range(1, len(b) + 1):\n            c = 0 if a[i - 1] == b[j - 1] else 1\n            d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c)\n            if i > 1 and j > 1 and a[i - 1] == b[j - 2] and a[i - 2] == b[j - 1]:\n                d[i][j] = min(d[i][j], d[i - 2][j - 2] + 1)\n    return d[len(a)][len(b)]\n\n\nTOKEN_RE = re.compile(r\"(?<![A-Za-z0-9_\\-/+.])([A-Za-z0-9][A-Za-z0-9_\\-/+]*[A-Za-z0-9+])\")\nDEVICE_LIKE = re.compile(r\"^[A-Z]{1,5}-?\\d{3,4}[A-Z0-9]*(?:[-/][A-Z0-9]+)*$\")\nMODULE_LIKE = re.compile(r\"^[A-Z0-9][A-Z0-9_\\-/]*-?(?:SFP\\+?|SPF\\+?|FSP\\+?|XFP|XPF|FXP|QSFP28|CFP4|CFP2)(?:[-/+][A-Z0-9\\-/+]+)?$\")\nIGNORE = re.compile(r\"^(TD\\d|SP\\d|IEEE|RJ-?45|ITU|VER|V\\d|CAT|FTL|FCL|FIM)\", re.I)\n\n\ndef is_known(tok):\n    u = tok.upper()\n    if u in KNOWN:\n        return KNOWN[u]\n    # 既知の型番 + \"-\"/\"/\" 区切りの派生(例: XGMC-2101X-PSR、GM3200-CTRL1、H-LX40-SFP/R)\n    for k in sorted(KNOWN, key=len, reverse=True):\n        if u.startswith(k) and len(u) > len(k) and u[len(k)] in \"-/+\":\n            return KNOWN[k] if k not in (\"GM100\", \"ME100\") else tok\n    # GM100 系の派生型番(GM100X-R/L 等)\n    if re.match(r\"^GM100(X|T|TR|T_X)?(-R)?(\\d{3})?(/[A-Z]+)?(-201)?$\", u) or re.match(r\"^ME100(R|-R)?\\d?(-\\d{3})?(/[A-Z]+)?(-201)?$\", u):\n        return tok\n    return None\n\n\ndef extract_models(text):\n    found = []\n    for m in TOKEN_RE.finditer(text):\n        tok = m.group(1).rstrip(\"/-\")\n        u = tok.upper()\n        if IGNORE.match(u):\n            continue\n        if not (tok[0].isupper() or tok[0].isdigit()):\n            continue\n        known = is_known(tok)\n        kind = \"module\" if (MODULE_LIKE.match(u) or u in MODULE_SET) else (\"device\" if DEVICE_LIKE.match(u) else None)\n        if known:\n            found.append({\"tok\": tok, \"model\": known, \"valid\": True, \"pos\": m.start(), \"kind\": kind or \"device\"})\n        elif kind:\n            found.append({\"tok\": tok, \"model\": tok, \"valid\": False, \"pos\": m.start(), \"kind\": kind})\n    return found\n\n\ndef suggest(tok, kind):\n    pool = MODULES if kind == \"module\" else APRESIA + [\"GM3200\", \"ME3200\", \"GM100\", \"ME100\"]\n    scored = sorted(((dl(tok, c), c) for c in pool), key=lambda x: (x[0], len(x[1])))\n    # 1文字違い(置換・脱字・余分・隣接入替え)のみを候補にする。離れた型番(GM5000→GM3200 等)は候補にしない\n    out = [c for d, c in scored if d <= 1][:3]\n    if not out and kind != \"module\":\n        for dg in re.findall(r\"\\d{3,4}\", tok):\n            out += [c for c in DIGIT_INDEX.get(dg, []) if c not in out]\n    return out[:3]\n\n\ndef invalid_message(tok, kind):\n    cands = suggest(tok, kind)\n    msg = NOT_FOUND + \"(「%s」という型番は登録資料にありません。型番の誤りの可能性があります。\" % tok\n    if cands:\n        msg += \"もしかして「%s」のことでしょうか? 正しい型番をご確認のうえ、改めて質問してください)\" % \"」または「\".join(cands)\n    else:\n        msg += \"正しい型番をご確認のうえ、改めて質問してください)\"\n    return msg\n\n\ndef has_particles(tok):\n    return re.search(r\"(の|を|は|が|に|で|と|へ|から|まで|について|って|ですか|ますか|ください)\", tok) is not None\n\n\ndef japanese_issue(text, models):\n    \"\"\"日本語の誤り(誤変換・脱字・てにをは・単語の羅列)を検出。(説明, 推定した正しい質問) を返す\"\"\"\n    for wrong, right in TYPO.items():\n        if wrong in text:\n            return (\"「%s」は「%s」の誤記ではないでしょうか。\" % (wrong, right), text.replace(wrong, right))\n    for kw in re.findall(r\"[ァ-ヴー]{2,}\", text):\n        if kw in KATAKANA_OK or len(kw) < 2:\n            continue\n        for term in KATAKANA_TERMS:\n            if kw != term and abs(len(kw) - len(term)) <= 1 and dl(kw, term) == 1 and len(term) >= 3:\n                return (\"「%s」は「%s」の誤記ではないでしょうか。\" % (kw, term), text.replace(kw, term))\n    if re.search(r\"が(教えて|知りたい|おしえて)\", text):\n        fixed = re.sub(r\"に(?=[^に]*が(教えて|知りたい|おしえて))\", \"の\", text, count=1)\n        fixed = re.sub(r\"が(教えて|知りたい|おしえて)\", r\"を\\1\", fixed)\n        return (\"助詞(てにをは)に誤りがあるようです。\", fixed)\n    toks = [t for t in re.split(r\"[\\s　]+\", text) if t]\n    model_toks = {m[\"tok\"] for m in models}\n    words = [t for t in toks if t not in model_toks]\n    if len(toks) >= 3 and len(words) >= 2 and not any(has_particles(t) for t in words):\n        head = \"・\".join(m[\"model\"] for m in models) if models else \"\"\n        guess = (head + \"について、\" if head else \"\") + \"「\" + \"」「\".join(words) + \"」に関する何を知りたいか\"\n        return (\"単語の羅列のため、ご質問の意図を特定できませんでした。\", guess)\n    return None\n\n\ndef aspects_for(text):\n    extra = []\n    for pat, kw in ASPECTS:\n        if re.search(pat, text, flags=re.I):\n            extra.append(kw)\n    return extra\n\n\ndef english_to_japanese(text):\n    if re.search(r\"[ぁ-んァ-ヶ一-龥]\", text):\n        return text\n    t = text\n    rep = [\n        (r\"power consumption\", \"消費電力\"), (r\"apparent power\", \"皮相電力\"), (r\"weight|mass\", \"質量\"),\n        (r\"wavelength\", \"送信波長\"), (r\"transmit(ting)? power|output power\", \"光送信レベル\"),\n        (r\"commands?\", \"コマンド\"), (r\"logs?\", \"ログ\"), (r\"status|state\", \"状態\"),\n    ]\n    found = [ja for pat, ja in rep if re.search(pat, t, flags=re.I)]\n    models = [m[\"model\"] for m in extract_models(t)]\n    if found and models:\n        return \"%sの%sを教えてください\" % (\"と\".join(models), \"と\".join(found))\n    return text\n\n\nSTYLE_ONLY = r\"^(簡潔に|短く|詳しく|詳細に|要点を|箇条書きで|表で|表形式で|日本語で|わかりやすく|まとめて|一覧で)\"\nNO_SPLIT = r\"違い|比較|差分|同じ|異な|どう違|どちら|共通|ですよね|ますよね|よね\\?|でも使え|書いてあ|記載されて\"\n\n\ndef has_aspect(seg, ms):\n    rest = seg\n    for m in ms:\n        rest = rest.replace(m[\"tok\"], \"\")\n    rest = re.sub(r\"(それぞれ|各々|まとめて|ずつ|について|に関して)\", \"\", rest)\n    return len(re.sub(r\"[\\s、。,?!のとをはでにがや]\", \"\", rest)) >= 2\n\n\ndef split_parts(text):\n    \"\"\"1つの入力に含まれる複数の質問を分割する。戻り値: (質問文のリスト, 回答スタイルの指示)\"\"\"\n    style = []\n    sents = []\n    for s in re.split(r\"(?<=[?])|。|\\n\", text):\n        s = (s or \"\").strip()\n        if not s:\n            continue\n        if re.search(STYLE_ONLY, s) and not extract_models(s) and len(s) <= 30:\n            style.append(s)\n        else:\n            sents.append(s)\n    parts = []\n    for s in sents:\n        if re.search(NO_SPLIT, s):\n            parts.append(s)\n            continue\n        segs = [s]\n        if re.search(r\"それぞれ|まとめて|各々|ずつ\", s) or len(extract_models(s)) >= 2 or \"と、\" in s:\n            segs = [x for x in re.split(r\"と、|、|,(?=\\S)\", s) if x.strip()]\n            # 観点のない区切り(「XGMC-2016とGM3200、それぞれの〜」の前半)は次の区切りと結合する\n            merged = []\n            for x in segs:\n                if merged and not has_aspect(merged[-1], extract_models(merged[-1])):\n                    merged[-1] = merged[-1] + \"、\" + x\n                else:\n                    merged.append(x)\n            segs = merged\n        for seg in segs:\n            ms = extract_models(seg)\n            if len(ms) >= 2:\n                # 「AとBのX」「AのXとBのY」 → 型番の位置で分割\n                cuts = [m[\"pos\"] for m in ms[1:]]\n                pieces, prev = [], 0\n                for c in cuts:\n                    pieces.append(seg[prev:c])\n                    prev = c\n                pieces.append(seg[prev:])\n                parts += pieces\n            else:\n                parts.append(seg)\n    cleaned = []\n    for p in parts:\n        p = re.sub(r\"^(と|、|,|および|及び|や|それと|また)\\s*\", \"\", p.strip())\n        p = re.sub(r\"(と|、|,|および|及び|や)$\", \"\", p).strip()\n        p = re.sub(r\"を?まとめて(?=教えて|ください|下さい)\", \"を\", p)\n        if p:\n            cleaned.append(p)\n    # 片側だけに観点がある場合(「XGMC-2016と / GM3200のログ確認方法」)は観点を共有する\n    result = []\n    tail = None\n    for p in reversed(cleaned):\n        ms = extract_models(p)\n        rest = p\n        for m in ms:\n            rest = rest.replace(m[\"tok\"], \"\")\n        rest = rest.strip()\n        lead = re.match(r\"^[、,\\s]*(の|で|は|に|が)?\", rest).group(1) or \"の\"\n        rest = re.sub(r\"^[、,\\s]*(の|で|は|に|が)?[、,\\s]*(それぞれ|各々)?の?\", \"\", rest).strip()\n        if has_aspect(p, ms):\n            tail = (lead, rest)\n        elif ms and tail:\n            p = ms[0][\"tok\"] + tail[0] + tail[1]\n        result.append(p)\n    result.reverse()\n    # 型番のない質問は直前の質問の型番を引き継ぐ(機器仕様一覧など資料そのものを指定した質問は除く)\n    final, last = [], []\n    for p in result:\n        ms = extract_models(p)\n        if ms:\n            last = ms\n        elif last and not re.search(r\"機器仕様一覧|登録されている\", p) and not re.search(r\"SEND|XGMC|GMC\", p):\n            p = last[0][\"tok\"] + \"の\" + p\n        p = re.sub(r\"(は|を|の)?(それぞれ|各々)(の)?\", lambda m: m.group(1) or m.group(3) or \"\", p)\n        p = re.sub(r\"[、,\\s]+(の|は|で)\", r\"\\1\", p)\n        if p not in final:\n            final.append(p)\n    return (final or [text]), \" \".join(style)\n\n\ndef classify_part(p):\n    ms = extract_models(p)\n    bad = [m for m in ms if not m[\"valid\"]]\n    good = [m for m in ms if m[\"valid\"]]\n    if bad and not good:\n        return {\"type\": \"fixed\", \"text\": p, \"answer\": \" \".join(invalid_message(m[\"tok\"], m[\"kind\"]) for m in bad)}\n    if re.search(r\"価格|値段|金額|費用|料金|保守費|いくら|納期|在庫|製造中止|生産中止|販売終了|販売中止|EOL|発売|後継|price|cost\", p, re.I):\n        return {\"type\": \"fixed\", \"text\": p, \"answer\": NOT_FOUND + \"(価格・費用・納期・在庫・製造中止・後継機種などの販売情報は登録資料に含まれていません)\"}\n    if re.search(r\"Cisco|IOS|Catalyst|Juniper|クラウド\", p, re.I):\n        return {\"type\": \"fixed\", \"text\": p, \"answer\": NOT_FOUND + \"(他社製品のコマンド・クラウド管理機能など、登録資料の範囲外の内容です)\"}\n    if re.search(r\"分解|廃棄|処分|清掃\", p):\n        return {\"type\": \"fixed\", \"text\": p, \"answer\": NOT_FOUND + \"(分解・清掃・廃棄などの手順は登録資料に記載がないため、一般的な手順を創作して回答することはできません)\"}\n    note = \" \".join(invalid_message(m[\"tok\"], m[\"kind\"]) for m in bad)\n    llm_text = \"\"\n    if re.search(r\"推奨値|推奨の値|推奨設定|おすすめの値\", p):\n        note += \"推奨値は登録資料に記載が見つかりませんでした。以下は資料に記載されている設定方法・初期値です。\"\n        # LLM には「推奨値」ではなく初期値・設定方法を聞く(推奨値を探して「記載なし」と答えるのを防ぐ)\n        llm_text = re.sub(r\"推奨値|推奨の値|推奨設定|おすすめの値\", \"初期設定(初期値)と設定方法\", p)\n    premise = bool(re.search(r\"ですよね|ますよね|ですね\\?|でしょ\\?|よね\\?\", p))\n    asp = \" \".join(aspects_for(p))\n    names = list(dict.fromkeys(m[\"model\"] for m in good))\n    if not names and re.search(r\"\\blinecard\\b\", p):\n        asp += \" XGMC-2016 CommandReference_XGMC-2016\"  # linecard 指定の構文は集合型 XGMC-2016 のコマンド\n    hint, tail = \"\", \"\"\n    if premise and re.search(r\"\\blinecard\\b\", p, re.I) and names and \"XGMC-2016\" not in names:\n        hint = (\"linecard を付けた構文(configure linecard … / system-download linecard …)は集合型 XGMC-2016 の管理モジュールから\"\n                \"ラインカード・リモートユニットを操作するためのコマンドです。%s 単体のコマンドとは異なることを指摘してください。\" % \"・\".join(names))\n        tail = (\"(補足: linecard を付けた構文は集合型 XGMC-2016 の管理モジュールからラインカード・リモートユニットを操作するためのコマンドで、\"\n                \"%s 単体の構文とは異なります。参照: ReleaseNotes_XGMC-2016-Ver.1.05.49_TD61-8607.pdf p.4)\" % \"・\".join(names))\n    if re.search(r\"すべて|全て|全部|一覧|列挙\", p) and re.search(r\"コマンド|command\", p, re.I):\n        tail = (\"※上記は検索で確認できた主なコマンドのみで、網羅したものではありません。\"\n                \"すべてのコマンドはCommandReferenceのコマンド一覧章参照(各装置のコマンドリファレンスの目次・コマンド一覧)。\")\n    # バージョン指定: 資料名の表記(Ver.1.05.36)に合わせた検索語を加え、複数バージョンは版ごとに検索する\n    vers = list(dict.fromkeys(re.findall(r\"(?:Ver\\.?\\s?|v)?(\\d+\\.\\d{2}\\.\\d{2})\", p, re.I)))\n    version_q = bool(vers) or bool(re.search(r\"バージョン|リリース|追加された|削除|廃止\", p))\n    if vers:\n        asp += \" \" + \" \".join(\"Ver.%s %s\" % (v, v) for v in vers) + \" 機能追加 仕様変更 ReleaseNotes\"\n    if len(names) >= 2 and all(n.upper() in MODULE_SET or MODULE_LIKE.match(n.upper()) for n in names) and \"伝送特性\" not in asp:\n        # 光モジュール同士の比較で観点の指定が無い質問(「AとBの違い」): 各モジュールの仕様書(伝送特性の表)が検索されるよう、\n        # 仕様書の見出し語を検索語に加える(送信波長などの観点がある質問は、すでに同じ語が検索語に入っている)\n        asp += \" 標準仕様書 伝送特性 送信波長 光送信レベル 光受信レベル\"\n    if len(names) >= 2:\n        # 比較・前提確認の質問: 型番ごとに検索する\n        queries = [re.sub(r\"\\s+\", \" \", \"%s %s %s\" % (n, p, asp)).strip()[:250] for n in names]\n    elif len(vers) >= 2:\n        queries = [re.sub(r\"\\s+\", \" \", \"%s ReleaseNotes Ver.%s %s 機能追加 仕様変更 不具合修正 %s\" % (\" \".join(names), v, v, p)).strip()[:250]\n                   for v in vers]\n    else:\n        queries = [re.sub(r\"\\s+\", \" \", \"%s %s %s\" % (p, \" \".join(names), asp)).strip()[:250]]\n    return {\"type\": \"rag\", \"text\": p, \"queries\": queries, \"models\": names, \"note\": note.strip(), \"premise\": premise,\n            \"hint\": hint, \"tail\": tail, \"version\": version_q, \"llm_text\": llm_text}\n\n\ndef main(query: str, pending: str, last_model: str) -> dict:\n    raw = query or \"\"\n    text = nfkc(raw)\n    pending = (pending or \"\").strip()\n    last_model = (last_model or \"\").strip()\n    prefix = \"\"\n\n    def out_fixed(ans, new_pending=\"\", new_last=None):\n        return {\"route\": \"fixed\", \"fixed_answer\": ans, \"plan_json\": \"[]\", \"q1\": text or \"-\", \"q2\": text or \"-\",\n                \"q3\": text or \"-\", \"q4\": text or \"-\", \"new_pending\": new_pending,\n                \"new_last_model\": last_model if new_last is None else new_last, \"normalized\": text}\n\n    # ---- 1. 前回の聞き返しへの返答(足りない情報のみの入力) ----\n    models_now = extract_models(text)\n    if pending:\n        only_models = models_now and len(re.sub(r\"[\\s、,。?]\", \"\", re.sub(\"|\".join(re.escape(m[\"tok\"]) for m in models_now), \"\", text))) <= 3\n        if re.fullmatch(r\"(はい|そう|そうです|お願いします|それで|yes|ok|OK)[。!]*\", text):\n            text = pending\n            if last_model and not extract_models(text):\n                # 「この機器の〜」への「はい」 → 直前の話題の型番で質問する\n                text = re.sub(r\"この(機器|装置|製品|モジュール)|その(機器|装置|製品|モジュール)\", last_model, text)\n                text = re.sub(r\"^(では|じゃあ|それでは)、?\", last_model + \"の\", text)\n        elif only_models and all(m[\"valid\"] for m in models_now):\n            mdl = models_now[0][\"tok\"]\n            if re.search(r\"この(機器|装置)|その(機器|装置)\", pending):\n                text = re.sub(r\"この(機器|装置)|その(機器|装置)\", mdl, pending)\n            else:\n                digits = re.findall(r\"(?<![A-Za-z0-9\\-])\\d{3,4}(?![0-9])\", pending)\n                if digits and digits[0] in mdl:\n                    text = re.sub(r\"(?<![A-Za-z0-9\\-])\" + digits[0] + r\"(?![0-9])\", mdl, pending, count=1)\n                else:\n                    text = mdl + \"の\" + re.sub(r\"^(では|じゃあ|それでは)、?\", \"\", pending)\n        models_now = extract_models(text)\n\n    # ---- 2. 入力の異常(記号のみ・空) ----\n    if not re.search(r\"[A-Za-z0-9ぁ-んァ-ヶ一-龥]\", text):\n        return out_fixed(\"ご質問の意図を確認させてください。入力された内容(記号のみ)からは、何についてのご質問か判断できませんでした。\"\n                         \"装置名・型番と知りたい内容を含めて質問してください(例:「XGMC-2016の消費電力を教えてください」)。\")\n\n    # ---- 3. プロンプトインジェクション・開示要求 ----\n    if re.search(r\"システムプロンプト|system ?prompt|プロンプトを(表示|教え|見せ|開示|出力)|内部(の)?(指示|設定)|あなたへの指示\", text, re.I):\n        return out_fixed(\"申し訳ありませんが、システムプロンプトや内部の指示内容は開示できません。登録資料(マニュアル・仕様書)に関するご質問にお答えします。\")\n    inj = r\"(これまで|今まで|以前|上記|前)の(指示|命令|ルール|設定|制約)を?(すべて|全て)?(忘れ|無視|破棄|リセット)[^。、]*[。、]?|ルールを無視[^。、]*[。、]?|制限を(解除|外)[^。、]*[。、]?|自由に回答してください[。、]?|何でも答えて[^。、]*[。、]?\"\n    if re.search(inj, text):\n        prefix = \"※回答ルール(登録資料のみを根拠に回答する)は変更できません。ルールを維持したまま回答します。\\n\\n\"\n        text = re.sub(inj, \"\", text).strip()\n        models_now = extract_models(text)\n        if not re.search(r\"[A-Za-z0-9ぁ-んァ-ヶ一-龥]\", text):\n            return out_fixed(prefix.strip())\n\n    # ---- 4. 創作・推測の要求 ----\n    if re.search(r\"創作|それらしく|でっち上げ|捏造|予想して|推測して|想像して|架空|作り話|考えて(ください|下さい)\", text):\n        return out_fixed(\"登録資料にない情報の推測・創作には応じられません。\" + NOT_FOUND)\n\n    # ---- 5. 利用者からの情報の刷り込み ----\n    if re.search(r\"覚えて|記憶して|学習して|覚えておいて|記録して\", text):\n        return out_fixed(\"ご提示いただいた情報は登録資料に記載された情報ではないため、記憶したり回答の根拠として使用したりすることはできません。\"\n                         \"本アプリは登録資料(マニュアル・仕様書)の記載のみを根拠に回答します。\")\n\n    # ---- 6. 用途外 ----\n    if re.search(r\"天気|翻訳|英語に|英訳|和訳|訳して|FizzBuzz|プログラム(を|の)?(書|作)|コードを(書|作)|Python|JavaScript|Java\\b|小説|歌詞|ジョーク|占い|レシピ\", text, re.I) or \\\n            (re.fullmatch(r\"(こんにちは|こんばんは|おはよう(ございます)?|ありがとう(ございます)?|hello|hi)[。!！]*\", text, re.I)):\n        return out_fixed(\"申し訳ありませんが、本アプリはメディアコンバーター(アプレシア製 XGMC・GMC・CGMC シリーズ、NEC製 GM3200・GM100 など)\"\n                         \"および光モジュールの登録資料に関するご質問専用です。雑談・天気・翻訳・プログラム作成などのご依頼は用途外のためお答えできません。\")\n\n    # ---- 7. 良否・導入可否などの判断の要求 ----\n    if re.search(r\"良い製品|いい製品|良い装置|良いもの|優れてい|おすすめ|オススメ|お勧め|どちらを(導入|選|買|使|採用)|導入すべき|買うべき|選ぶべき|採用すべき|どれがいい|どっちがいい|使うべき\", text):\n        names = \"・\".join(dict.fromkeys(m[\"model\"] for m in models_now if m[\"valid\"]))\n        return out_fixed(\"製品の良し悪しや、どの製品を導入すべきかといった主観的な判断・構成判断にはお答えできません。\"\n                         \"登録資料に記載された客観的な仕様(消費電力・質量・対応インタフェースなど)であればお答えできますので、\"\n                         + (\"%sについて\" % names if names else \"\") + \"知りたい項目を指定して質問してください。\",\n                         new_last=(models_now[-1][\"model\"] if models_now and models_now[-1][\"valid\"] else None))\n\n    # ---- 8. 型番だけの入力 ----\n    rest = text\n    for m in models_now:\n        rest = rest.replace(m[\"tok\"], \"\")\n    if models_now and not re.search(r\"[A-Za-z0-9ぁ-んァ-ヶ一-龥]\", rest):\n        names = \"・\".join(m[\"model\"] for m in models_now)\n        return out_fixed(\"「%s」について、何を知りたいか教えてください(例: 消費電力、質量、状態確認のコマンド、ログの確認方法など)。\" % names,\n                         new_last=models_now[-1][\"model\"] if models_now[-1][\"valid\"] else None)\n\n    # ---- 9. 日本語の誤り ----\n    jp = japanese_issue(english_to_japanese(text), models_now)\n    if jp:\n        reason, guess = jp\n        return out_fixed(\"ご質問の内容を正しく理解するため確認させてください。%s「%s」という意味でしょうか? よろしければ「はい」と入力するか、正しい内容で改めて質問してください。\"\n                         % (reason, guess), new_pending=guess if \"何を知りたいか\" not in guess else \"\")\n\n    text = english_to_japanese(text)\n    models_now = extract_models(text)\n\n    # ---- 10. 曖昧な質問(装置を特定できない) ----\n    if not models_now:\n        if re.search(r\"この(機器|装置|製品|モジュール)|その(機器|装置|製品|モジュール)|^(では|じゃあ|それでは)\", text):\n            hint = (\"直前の話題の「%s」のことでしょうか? \" % last_model) if last_model else \"\"\n            return out_fixed(\"「この機器」など、どの装置を指しているかを質問文から特定できません。%s装置名(型番)を含めて改めて質問してください。\" % hint,\n                             new_pending=text)\n        digits = [d for d in re.findall(r\"(?<![A-Za-z0-9\\-])(\\d{3,4})(?![0-9])\", text) if d in DIGIT_INDEX]\n        if digits:\n            cands = DIGIT_INDEX[digits[0]][:8]\n            return out_fixed(\"「%s」だけでは装置を特定できません。どの装置についてのご質問でしょうか? (候補: %s など)\" % (digits[0], \"、\".join(cands)),\n                             new_pending=text)\n        if re.search(r\"SFP|XFP|光モジュール\", text, re.I) and re.search(r\"伝送距離|距離|波長|レベル|仕様|規格\", text) and not re.search(DOC_REF, text):\n            return out_fixed(\"どの光モジュールについてのご質問でしょうか? 型番を指定してください(例: H-LX40-SFP、H-LX80-SFP、LR-XFP など)。\",\n                             new_pending=text)\n        if re.search(DEVICE_ASPECT, text, re.I) and not re.search(DOC_REF, text) and \\\n                not re.search(r\"(configure|show|no|write|reboot)\\s+[a-z\\-]+\", text) and not re.search(r\"SEND|XGMC|GMC|SFP\", text):\n            return out_fixed(\"どの装置(またはモジュール)についてのご質問でしょうか? 装置名・型番を含めて質問してください\"\n                             \"(例: XGMC-2016、GM3200、H-LX40-SFP など)。\", new_pending=text)\n\n    # ---- 11. 質問の分割と各質問の判定 ----\n    texts, style = split_parts(text)\n    parts = [classify_part(p) for p in texts][:4]\n    rag = [p for p in parts if p[\"type\"] == \"rag\"]\n    valid_models = [m[\"model\"] for m in extract_models(text) if m[\"valid\"]]\n    new_last = valid_models[-1] if valid_models else last_model\n    if not rag:\n        if len(parts) == 1:\n            return out_fixed(prefix + parts[0][\"answer\"], new_last=new_last)\n        body = \"\\n\\n\".join(\"### %d. %s\\n%s\" % (i + 1, p[\"text\"], p[\"answer\"]) for i, p in enumerate(parts))\n        return out_fixed(prefix + body, new_last=new_last)\n    # 検索枠(q1〜q4)を各質問に割り当てる(1質問に複数枠もあり。空き枠は q1 と同じクエリ)\n    qs = []\n    for p in rag:\n        p[\"slots\"] = []\n    while len(qs) < 4 and any(p[\"queries\"] for p in rag):\n        for p in rag:\n            if p[\"queries\"] and len(qs) < 4:\n                p[\"slots\"].append(len(qs))\n                qs.append(p[\"queries\"].pop(0))\n    qs += [qs[0]] * (4 - len(qs))\n    plan = {\"parts\": parts, \"style\": style, \"original\": raw, \"normalized\": text}\n    return {\"route\": \"rag\", \"fixed_answer\": prefix, \"plan_json\": json.dumps(plan, ensure_ascii=False),\n            \"q1\": qs[0], \"q2\": qs[1], \"q3\": qs[2], \"q4\": qs[3], \"new_pending\": \"\", \"new_last_model\": new_last,\n            \"normalized\": text}\n"
+        code_language: python3
+        desc: 型番の実在確認・質問の分割・用途外/記載なし/日本語の誤りの判定を決定的に行う
+        outputs:
+          fixed_answer:
+            children: null
+            type: string
+          new_last_model:
+            children: null
+            type: string
+          new_pending:
+            children: null
+            type: string
+          normalized:
+            children: null
+            type: string
+          plan_json:
+            children: null
+            type: string
+          q1:
+            children: null
+            type: string
+          q2:
+            children: null
+            type: string
+          q3:
+            children: null
+            type: string
+          q4:
+            children: null
+            type: string
+          route:
+            children: null
+            type: string
+        selected: false
+        title: 前処理・入力判定
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          variable: query
+        - value_selector:
+          - conversation
+          - pending_question
+          variable: pending
+        - value_selector:
+          - conversation
+          - last_model
+          variable: last_model
+      height: 98
+      id: '1002'
+      position:
+        x: 340
+        y: 300
+      positionAbsolute:
+        x: 340
+        y: 300
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 956d5d76-8eea-58d3-a33c-24354784e493
+            value: fixed
+            varType: string
+            variable_selector:
+            - '1002'
+            - route
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 回答方法の分岐
+        type: if-else
+      height: 150
+      id: '1004'
+      position:
+        x: 640
+        y: 300
+      positionAbsolute:
+        x: 640
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        dataset_ids:
+        - MPDhgafb+/e062ZCexTBmwjzzMNP/s9v4UnU0LOu2YQsX9Q/Qory3aZd/aj0/FBQ
+        - V6ZS0+4qM+RCfVKWWCohZpP1E7S0cDmx0t3HmttUmgNxCusMmkkmU3wPHFlbk6pN
+        - 1zkwOkhm960zZmuX2rGR59YMe7TcaY0vXcr+OKvk8JmZcM0+kwUR1LvjD1kyl6Ct
+        - syio7VE4j4Sn0gnXskd0YV47mZqxwvRqSHkyxEpJgmXj88eUj04MeqNUFeFv88zH
+        - wv3l5KOWCqY8yPuhDxkk1E4UH7I8b/OfSN9e+px49QbjR4Wnn7Lz6IdmD7fieTID
+        - AEkXZF40+bFG4XYPKJs31Bc8i1k+9LudI7O20/E2zByl8YoC+UtHqxwRkJ1fs4yW
+        desc: 質問1の検索(空き枠は質問1と同じクエリ)
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          top_k: 8
+          weights:
+            keyword_setting:
+              keyword_weight: 1
+            vector_setting:
+              embedding_model_name: Qwen/Qwen3-Embedding-8B
+              embedding_provider_name: langgenius/huggingface_tei/huggingface_tei
+              vector_weight: 0
+            weight_type: customized
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1002'
+        - q1
+        retrieval_mode: multiple
+        selected: false
+        title: 知識検索1
+        type: knowledge-retrieval
+      height: 176
+      id: '1011'
+      position:
+        x: 940
+        y: 460
+      positionAbsolute:
+        x: 940
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        dataset_ids:
+        - MPDhgafb+/e062ZCexTBmwjzzMNP/s9v4UnU0LOu2YQsX9Q/Qory3aZd/aj0/FBQ
+        - V6ZS0+4qM+RCfVKWWCohZpP1E7S0cDmx0t3HmttUmgNxCusMmkkmU3wPHFlbk6pN
+        - 1zkwOkhm960zZmuX2rGR59YMe7TcaY0vXcr+OKvk8JmZcM0+kwUR1LvjD1kyl6Ct
+        - syio7VE4j4Sn0gnXskd0YV47mZqxwvRqSHkyxEpJgmXj88eUj04MeqNUFeFv88zH
+        - wv3l5KOWCqY8yPuhDxkk1E4UH7I8b/OfSN9e+px49QbjR4Wnn7Lz6IdmD7fieTID
+        - AEkXZF40+bFG4XYPKJs31Bc8i1k+9LudI7O20/E2zByl8YoC+UtHqxwRkJ1fs4yW
+        desc: 質問2の検索(空き枠は質問1と同じクエリ)
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          top_k: 8
+          weights:
+            keyword_setting:
+              keyword_weight: 1
+            vector_setting:
+              embedding_model_name: Qwen/Qwen3-Embedding-8B
+              embedding_provider_name: langgenius/huggingface_tei/huggingface_tei
+              vector_weight: 0
+            weight_type: customized
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1002'
+        - q2
+        retrieval_mode: multiple
+        selected: false
+        title: 知識検索2
+        type: knowledge-retrieval
+      height: 176
+      id: '1012'
+      position:
+        x: 1240
+        y: 460
+      positionAbsolute:
+        x: 1240
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        dataset_ids:
+        - MPDhgafb+/e062ZCexTBmwjzzMNP/s9v4UnU0LOu2YQsX9Q/Qory3aZd/aj0/FBQ
+        - V6ZS0+4qM+RCfVKWWCohZpP1E7S0cDmx0t3HmttUmgNxCusMmkkmU3wPHFlbk6pN
+        - 1zkwOkhm960zZmuX2rGR59YMe7TcaY0vXcr+OKvk8JmZcM0+kwUR1LvjD1kyl6Ct
+        - syio7VE4j4Sn0gnXskd0YV47mZqxwvRqSHkyxEpJgmXj88eUj04MeqNUFeFv88zH
+        - wv3l5KOWCqY8yPuhDxkk1E4UH7I8b/OfSN9e+px49QbjR4Wnn7Lz6IdmD7fieTID
+        - AEkXZF40+bFG4XYPKJs31Bc8i1k+9LudI7O20/E2zByl8YoC+UtHqxwRkJ1fs4yW
+        desc: 質問3の検索(空き枠は質問1と同じクエリ)
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          top_k: 8
+          weights:
+            keyword_setting:
+              keyword_weight: 1
+            vector_setting:
+              embedding_model_name: Qwen/Qwen3-Embedding-8B
+              embedding_provider_name: langgenius/huggingface_tei/huggingface_tei
+              vector_weight: 0
+            weight_type: customized
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1002'
+        - q3
+        retrieval_mode: multiple
+        selected: false
+        title: 知識検索3
+        type: knowledge-retrieval
+      height: 176
+      id: '1013'
+      position:
+        x: 1540
+        y: 460
+      positionAbsolute:
+        x: 1540
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        dataset_ids:
+        - MPDhgafb+/e062ZCexTBmwjzzMNP/s9v4UnU0LOu2YQsX9Q/Qory3aZd/aj0/FBQ
+        - V6ZS0+4qM+RCfVKWWCohZpP1E7S0cDmx0t3HmttUmgNxCusMmkkmU3wPHFlbk6pN
+        - 1zkwOkhm960zZmuX2rGR59YMe7TcaY0vXcr+OKvk8JmZcM0+kwUR1LvjD1kyl6Ct
+        - syio7VE4j4Sn0gnXskd0YV47mZqxwvRqSHkyxEpJgmXj88eUj04MeqNUFeFv88zH
+        - wv3l5KOWCqY8yPuhDxkk1E4UH7I8b/OfSN9e+px49QbjR4Wnn7Lz6IdmD7fieTID
+        - AEkXZF40+bFG4XYPKJs31Bc8i1k+9LudI7O20/E2zByl8YoC+UtHqxwRkJ1fs4yW
+        desc: 質問4の検索(空き枠は質問1と同じクエリ)
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          top_k: 8
+          weights:
+            keyword_setting:
+              keyword_weight: 1
+            vector_setting:
+              embedding_model_name: Qwen/Qwen3-Embedding-8B
+              embedding_provider_name: langgenius/huggingface_tei/huggingface_tei
+              vector_weight: 0
+            weight_type: customized
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1002'
+        - q4
+        retrieval_mode: multiple
+        selected: false
+        title: 知識検索4
+        type: knowledge-retrieval
+      height: 176
+      id: '1014'
+      position:
+        x: 1840
+        y: 460
+      positionAbsolute:
+        x: 1840
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import json\nimport re\ntry:\n    import unicodedata\nexcept Exception:  # サンドボックスで利用できない場合は全角英数記号のみ半角化する\n    class unicodedata:\n        @staticmethod\n        def normalize(form, s):\n            return \"\".join(chr(ord(c) - 0xFEE0) if 0xFF01 <= ord(c) <= 0xFF5E else (\" \" if c == \"\\u3000\" else c) for c in s)\n\n# ============================================================\n# 資料整理(Dify コードノード)\n#   入力 : plan_json(前処理の結果) / r1〜r4(知識検索 1〜4 の結果)\n#   出力 : context(LLM に渡す質問別の資料) / meta_json(質問別の出典一覧。回答整形で使用)\n# 質問ごとに、型番・観点に合う検索結果だけを選び、別機種の資料や目次ページを除外する\n# ============================================================\n\nNEC_WORDS = re.compile(r\"GM3200|GM100|ME3200|ME100|GM1600|付録_GM3200\", re.I)\nAPRESIA_WORDS = re.compile(r\"XGMC|GMC-|CGMC|XGML|CGML|XGMU|XGMC2Ware|APRESIA|Apresia\", re.I)\nSRC_RE = re.compile(r\"^\\s*【出典:\\s*(.+?)\\s*(?:\\|\\s*(.+?))?\\s*】\")\nMODULE_IN_SRC = re.compile(r\"(?<![A-Z0-9])(?:H-)?[A-Z]{2,3}\\d{0,3}-(?:SFP|XFP)(?![A-Z0-9])\", re.I)\nCMDREF_RE = re.compile(r\"CommandReference|コマンドリファレンス\", re.I)\nSRC_MODEL_RE = re.compile(r\"(?:XGMC|CGMC|XGML|CGML|GMC)-?\\d{4}[A-Z]*\", re.I)\nSIGNED_RE = re.compile(r\"([-+]?\\d+(?:\\.\\d+)?)\\s*[〜~～]\\s*\\+(\\d+(?:\\.\\d+)?)\\s*(dBm|dB)\")\nTOPIC_SOURCES = [\n    (r\"交換編\", r\"交換編\"),\n    (r\"FTP編\", r\"FTP編\"),\n    (r\"SEND|ATT|アッテネーター|光出力\", r\"SEND発生時\"),\n    (r\"機器仕様一覧\", r\"機器仕様一覧\"),\n    (r\"手順書|交換編|FTP編|バージョンアップ\", r\"手順書|CTRL盤|ファームウェア\"),\n    (r\"XFP|SFP|光モジュール|トランシーバ\", r\"Transceiver_list|SP61-|仕様書|SFP|XFP\"),\n    (r\"リリース|Ver|バージョン\", r\"Release|リリース|差分\"),\n]\nCORE_TERMS = [\n    \"皮相電力\", \"消費電力\", \"質量\", \"重量\", \"寸法\", \"送信波長\", \"受信波長\", \"波長\", \"光送信レベル\", \"光受信レベル\",\n    \"伝送距離\", \"ログ\", \"状態\", \"交換\", \"制御盤\", \"CTRL\", \"盤\", \"ラインカード\", \"MIB\", \"SEND\", \"ATT\", \"アッテネーター\",\n    \"障害\", \"トラブル\", \"XFP\", \"SFP\", \"手順\", \"リリース\", \"コマンド\", \"警報転送\", \"S6\", \"S7\", \"community\", \"コミュニティ\",\n    \"ファームウェア\", \"ダウンロード\", \"Multicast\", \"tech-support\", \"diagnosis\", \"10G_PKG\", \"削除\", \"追加\",\n]\n\n\ndef nf(s):\n    return unicodedata.normalize(\"NFKC\", s or \"\")\n\n\ndef src_of(item):\n    content = item.get(\"content\", \"\") if isinstance(item, dict) else str(item)\n    m = SRC_RE.match(content)\n    if m:\n        return m.group(1).strip(), (m.group(2) or \"\").strip(), content[m.end():]\n    title = \"\"\n    if isinstance(item, dict):\n        title = item.get(\"title\") or (item.get(\"metadata\") or {}).get(\"document_name\") or \"\"\n    return title.strip() or \"(資料名不明)\", \"\", content\n\n\ndef page_label(page):\n    p = re.sub(r\"\\(続き\\d+\\)\", \"\", page or \"\").strip()\n    m = re.match(r\"(\\d+)ページ\", p)\n    if m:\n        return \"p.\" + m.group(1)\n    return p\n\n\ndef is_toc(body):\n    b = nf(body)\n    return \"本文なし\" in b or len(re.findall(r\"[・.·…‥]{8,}\", b)) >= 2 or len(re.findall(r\"\\.{4,}\\s*\\d\", b)) >= 3\n\n\ndef doc_version(src):\n    \"\"\"コマンドリファレンスの(装置, 版)を返す。同じ装置の旧版は、最新版が検索されていれば使わない\"\"\"\n    if not CMDREF_RE.search(src):\n        return None, None\n    m = SRC_MODEL_RE.search(src)\n    v = re.search(r\"Ver\\.?(\\d+)\\.(\\d+)(?:\\.(\\d+))?\", src) or re.match(r\"(\\d+)\\.(\\d+)\\.(\\d+)-\", src)\n    if not m or not v:\n        return None, None\n    return m.group(0).upper().replace(\"-\", \"\"), tuple(int(x or 0) for x in v.groups())\n\n\ndef is_module(model):\n    \"\"\"光モジュールの型番か(SFP・XFP・QSFP・CFP を含む型番)\"\"\"\n    return bool(re.search(r\"SFP|XFP|QSFP|CFP\", nf(model), re.I))\n\n\ndef is_device_doc(src):\n    \"\"\"装置(メディアコンバーター本体)の資料か。資料名に装置の型番・シリーズ名がある資料を装置の資料とみなす\"\"\"\n    return bool(NEC_WORDS.search(src) or APRESIA_WORDS.search(src) or SRC_MODEL_RE.search(src))\n\n\ndef model_variants(model):\n    m = nf(model).upper()\n    return {m, m.replace(\"-\", \"\"), m.replace(\"-\", \" \")}\n\n\ndef has_model(text, model):\n    \"\"\"型番が語として含まれるか(GMC-2001 が XGMC-2001L に、XGMC-2001L が XGMC-2001LDW に部分一致しないようにする)\"\"\"\n    t = re.sub(r\"[‐‑‒–—―−]\", \"-\", nf(text)).upper()\n    return any(re.search(r\"(?<![A-Z0-9])%s(?![A-Z0-9])\" % re.escape(v), t) for v in model_variants(model))\n\n\ndef main(plan_json: str, r1: list, r2: list, r3: list, r4: list) -> dict:\n    try:\n        plan = json.loads(plan_json or \"{}\")\n    except Exception:\n        plan = {}\n    parts = plan.get(\"parts\", [])\n    results = [r1 or [], r2 or [], r3 or [], r4 or []]\n    rag = [p for p in parts if p.get(\"type\") == \"rag\"]\n    budget = max(3000, 12000 // max(1, len(rag)))\n    blocks, meta = [], []\n    for qi, p in enumerate(rag, 1):\n        text = nf(p.get(\"text\", \"\"))\n        models = p.get(\"models\", [])\n        nec_q = any(NEC_WORDS.search(m) for m in models)\n        # 光モジュール同士の比較・前提確認の質問か(例: H-LX40-SFP と H-LX80-SFP の違い)\n        module_cmp = len(models) >= 2 and all(is_module(m) for m in models)\n        apr_q = any(APRESIA_WORDS.search(m) for m in models)\n        cands, seen = [], set()\n        for slot in p.get(\"slots\", []):\n            for rank, item in enumerate(results[slot] if slot < len(results) else []):\n                src, page, body = src_of(item)\n                key = (src, page, body[:80])\n                if key in seen or not body.strip() or is_toc(body):\n                    continue\n                seen.add(key)\n                hay = nf(src + \" \" + body).upper()\n                score = 0.0\n                hit_model = False\n                for mdl in models:\n                    if has_model(src, mdl):\n                        score += 6\n                        hit_model = True\n                    elif has_model(body, mdl):\n                        score += 3\n                        hit_model = True\n                topic = False\n                for qpat, spat in TOPIC_SOURCES:\n                    if re.search(qpat, text, re.I) and re.search(spat, src, re.I):\n                        score += 3\n                        topic = True\n                for t in CORE_TERMS:\n                    if t.upper() in text.upper() and t.upper() in hay:\n                        score += 1.5\n                for tok in re.findall(r\"[a-z][a-z0-9\\-]{3,}|\\d+\\.\\d+\\.\\d+|Ver\\.?\\s?\\d[\\d.]+\", text):\n                    if nf(tok).upper() in hay:\n                        score += 2\n                # 質問中の CLI コマンド(例: configure linecard lh-port ...)が引数を挟んでそのまま現れる資料を優先\n                for phrase in re.findall(r\"(?:[a-z][a-z0-9\\-]*\\s+){2,}[a-z][a-z0-9\\-]*\", text):\n                    words = phrase.split()\n                    pat = r\"(?:\\s+<[^>]+>)?\\s+\".join(re.escape(w) for w in words)\n                    if re.search(pat, nf(body), re.I):\n                        score += 8\n                # 別メーカー装置の資料は除外(GM3200 の質問に XGMC の資料を使わない、など)\n                if apr_q and not nec_q and NEC_WORDS.search(src) and not hit_model:\n                    continue\n                if nec_q and not apr_q and APRESIA_WORDS.search(src) and not hit_model and not topic:\n                    continue\n                # 別の光モジュールの仕様書(H-LX40-SFP の質問に H-LX80-SFP仕様書 など)は除外\n                src_mods = [x.upper() for x in MODULE_IN_SRC.findall(nf(src))]\n                if models and src_mods and not any(sm in nf(m).upper() or nf(m).upper() in sm for sm in src_mods for m in models):\n                    continue\n                if models and not hit_model and not topic:\n                    score -= 4\n                # 光モジュール同士の比較: 伝送特性の表がある資料(モジュールの仕様書)を優先する\n                if module_cmp and hit_model and not is_device_doc(src) and re.search(r\"伝送特性|主要特性|送信波長|光送信レベル\", nf(body)):\n                    score += 2\n                score -= rank * 0.3\n                cands.append((score, src, page, body))\n        latest = {}\n        for c in cands:\n            fam, ver = doc_version(c[1])\n            if fam and ver > latest.get(fam, ()):\n                latest[fam] = ver\n        cands = [c for c in cands if doc_version(c[1])[0] is None or doc_version(c[1])[1] == latest[doc_version(c[1])[0]]]\n        cands.sort(key=lambda x: -x[0])\n        if module_cmp:\n            # 装置の資料(XGMC-2016 の標準仕様書など)にも複数モジュールの値が載っているため、そのままだと装置の資料1件だけが\n            # 根拠・出典になる。すべてのモジュールについて装置以外の資料に仕様(伝送特性の表など)が検索されていれば、装置の資料は使わない\n            own = [c for c in cands if not is_device_doc(c[1])]\n            spec = [c for c in own if re.search(r\"伝送特性|主要特性|送信波長|光送信レベル\", nf(c[3]))]\n            if all(any(has_model(c[1], m) or has_model(c[3], m) for c in spec) for m in models):\n                cands = own\n        good = [c for c in cands if c[0] > -2][:4] or cands[:2]\n        if len(models) >= 2:\n            # 比較など複数型番の質問: 型番ごとに最上位の資料を必ず含める(片方の資料だけにならないように)\n            # 資料名にその型番がある資料を優先し、無ければ本文にその型番があり資料名が別の型番でない資料を選ぶ\n            must = []\n            for m in models:\n                others = [o for o in models if o != m]\n                best = next((c for c in cands if has_model(c[1], m)), None) or \\\n                    next((c for c in cands if has_model(c[3], m) and not any(has_model(c[1], o) for o in others)), None)\n                if best and best not in must:\n                    must.append(best)\n            good = (must + [c for c in good if c not in must])[:4]\n        lines = [\"## 【質問%d】%s\" % (qi, p.get(\"llm_text\") or p.get(\"text\", \"\"))]\n        if p.get(\"premise\"):\n            lines.append(\"(この質問は利用者の前提が正しいかの確認です。資料で確認できない前提は肯定せず、誤りは指摘してください)\")\n        if p.get(\"note\"):\n            lines.append(\"(補足: %s)\" % p[\"note\"])\n        if p.get(\"hint\"):\n            lines.append(\"(回答の注意: %s)\" % p[\"hint\"])\n        used, srcs = 0, []\n        for j, (sc, src, page, body) in enumerate(good, 1):\n            room = min(1500, budget - used)\n            if room < 300:\n                break\n            b = re.sub(r\"【出典:[^】]*】\", \"\", nf(body))\n            b = re.sub(r\"[ \\t　]+\", \" \", b)\n            b = re.sub(r\"\\s*\\n\\s*\", \"\\n\", b).strip()[:room]\n            used += len(b)\n            ref = (src + \" \" + page_label(page)).strip()\n            lines.append(\"### 【資料%d-%d】出典: %s\\n%s\" % (qi, j, ref, b))\n            # 資料名に型番がある資料はその型番の資料とみなす(本文で他の型番に触れていても、その型番の出典にはしない)\n            in_src = [m for m in models if has_model(src, m)]\n            srcs.append({\"src\": src, \"page\": page_label(page), \"ref\": ref, \"excerpt\": b[:1500],\n                         \"models\": in_src or [m for m in models if has_model(body, m)],\n                         \"signed\": [\"%s|%s|%s\" % g for g in SIGNED_RE.findall(nf(body))][:10]})\n        if not srcs:\n            lines.append(\"(該当する資料は検索されませんでした)\")\n        blocks.append(\"\\n\".join(lines))\n        meta.append({\"text\": p.get(\"text\", \"\"), \"models\": models, \"sources\": srcs})\n    # 元の質問は渡さない(固定回答済みの部分まで LLM が番号を振り、【回答n】がずれるため)\n    head = \"## 質問数: %d(【回答1】〜【回答%d】をこの順で出力)\" % (len(rag), len(rag))\n    style = plan.get(\"style\", \"\")\n    if style:\n        head += \"\\n(回答スタイルの指示: %s)\" % style\n    return {\"context\": head + \"\\n\\n\" + \"\\n\\n\".join(blocks), \"meta_json\": json.dumps(meta, ensure_ascii=False)}\n"
+        code_language: python3
+        desc: 質問ごとに型番・観点に合う検索結果だけを選び、別機種の資料・目次ページを除外する
+        outputs:
+          context:
+            children: null
+            type: string
+          meta_json:
+            children: null
+            type: string
+        selected: false
+        title: 資料整理
+        type: code
+        variables:
+        - value_selector:
+          - '1002'
+          - plan_json
+          variable: plan_json
+        - value_selector:
+          - '1011'
+          - result
+          variable: r1
+        - value_selector:
+          - '1012'
+          - result
+          variable: r2
+        - value_selector:
+          - '1013'
+          - result
+          variable: r3
+        - value_selector:
+          - '1014'
+          - result
+          variable: r4
+      height: 98
+      id: '1020'
+      position:
+        x: 2140
+        y: 460
+      positionAbsolute:
+        x: 2140
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            temperature: 0.1
+          mode: chat
+          name: openai/gpt-oss-20b
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 369036f6-8bd2-5cc5-9ccb-32829c3ea8a7
+          role: system
+          text: 'Reasoning: low
+
+
+            あなたはメディアコンバーター(アプレシア製 XGMC/GMC/CGMC シリーズ、NEC製 GM3200/GM100 など)と光モジュールの登録資料(マニュアル・仕様書)に基づいて回答する社内アシスタントです。
+
+            ユーザーメッセージに【質問n】と、その根拠候補の【資料n-m】が質問ごとに与えられます。
+
+
+            ## 回答ルール(必ず守る)
+
+            1. 各【質問n】には、同じ番号の【資料n-m】に書かれている内容だけを根拠に答える。資料にない内容(一般論・他機種の情報・推測)で補わない。
+
+            2. 【資料n-m】に該当する記載が無いときは、その質問の回答を「登録資料に記載が見つかりませんでした。原本のマニュアルを確認してください。」の一文だけにする(参照行は付けない)。
+
+            3. 数値は資料の表記・単位のまま書く。符号(+/-)や範囲の書き方も資料どおりに写す(例: 資料が「0〜+5dBm」なら「0〜+5 dBm」。「+」を省かない)。質問の単位(W・g・mW など)が資料の単位(VA・kg・dBm など)と違っても換算しない。その場合は「資料では◯◯と記載されています(単位は資料記載のまま)」と書く。
+
+            4. 手順・フローは資料に書かれた順序どおりに番号付きリストで示す。コマンドはコードブロックで示す。
+
+            5. 「〜ですよね?」のような前提の確認には、資料で確認できない前提を肯定しない。前提が誤っていれば「いいえ、◯◯ではありません」と質問の前提(コマンド名・資料名・製品名など)を名指しして誤りを指摘し、資料に書かれた正しい内容を示す。
+
+            6. 型番は質問のとおりに扱う。GM3200 と GM100、XGMC-2001L と GMC-2001 のように似た名前の別製品の資料を取り違えない。別製品の資料は根拠にしない。
+
+            7. 「すべて列挙して」には資料にある分だけを挙げ、資料の一部しか確認できないときは「主なもの」と明記して記載箇所(資料名・節)を案内する。網羅したと偽らない。
+
+            8. バージョンの差分・追加・削除の質問は、資料に明記されている内容だけを答える。バージョンを推測しない。「どのバージョンで追加・削除されたか」を問われて、そのバージョン番号が資料に明記されていないときは、関連しそうな記載があってもそれを答えにせず、ルール2の一文だけを答える。2つのバージョンの違いを問われたら、資料にある各バージョンの機能追加・仕様変更をバージョンごとに示す。「表示項目追加」「◯◯機能追加に伴う対応」などの記載は、そのコマンド・機能自体が追加されたバージョンを示すものではないので、追加バージョンとして答えない。
+
+            9. 各回答の最後に「参照: 元ファイル名 p.ページ」を書く。元ファイル名とページは【資料n-m】の「出典:」の表記をそのまま書き写す(複数可。省略・言い換え・創作は禁止)。
+
+            10. 回答は必ず日本語で書く(質問が英語でも日本語で答える)。質問の復唱・検討メモ・英語の思考過程は出力しない。
+
+            11. 回答スタイルの指示(簡潔に・表で など)があれば従う。ただし数値・コマンド名・参照は省略しない。
+
+            12. 「(回答の注意: …)」が付いた質問は、その注意に従って回答する。
+
+            13. 「どの資料の何ページ」「どこに書いてありますか」には、資料名とページに加え、資料に節番号・見出し(例: 15.6.3.5「…」)があればそれも書く。複数の資料を挙げるときは、資料ごとにページを書く。
+
+
+            ## 出力形式(この形式以外は出力しない)
+
+            【質問n】の数だけ【回答n】を同じ番号で出力する(質問数より多く出力しない)。
+
+            【回答1】
+
+            (質問1への回答)
+
+            参照: 元ファイル名 p.ページ
+
+            【回答2】
+
+            (質問2への回答)
+
+            参照: 元ファイル名 p.ページ
+
+            '
+        - id: 2fb2cf27-1385-5861-b873-422c04af250a
+          role: user
+          text: '{{#1020.context#}}'
+        selected: false
+        structured_output_enabled: false
+        title: 回答生成LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 90
+      id: '1030'
+      position:
+        x: 2440
+        y: 460
+      positionAbsolute:
+        x: 2440
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import json\nimport re\n\n# ============================================================\n# 回答整形(Dify コードノード)\n#   入力 : text(LLM の出力) / plan_json / meta_json / prefix(前置きの注意書き)\n#   出力 : answer(利用者に返す最終回答)\n# ・思考タグ/英語の検討メモを除去 ・質問ごとの回答を元の順序で組み立て(固定回答の質問も合流)\n# ・参照(元ファイル名+ページ)を検証し、欠けていれば検索ヒットの出典を機械的に付与\n# ・LLM が空応答のときは検索ヒットの該当箇所を表示(空回答を返さない)\n# ============================================================\n\nNOT_FOUND = \"登録資料に記載が見つかりませんでした。原本のマニュアルを確認してください。\"\nNF_RE = re.compile(r\"記載が見つかりません|記載はありません|記載がありません|見つかりませんでした\")\n# バージョンの質問で、回答に参照(出典)を付けられない場合の回答\nNO_RELATED = \"関連記載なし(登録資料に該当する記載が見つかりませんでした。原本のマニュアル・リリースノートを確認してください。)\"\nASK_VERSION_RE = re.compile(r\"どのバージョン|どの版|何バージョン|バージョンはどれ|バージョンは何|いつ(から)?(追加|削除|廃止|変更)\")\nVERSION_Q_RE = re.compile(r\"バージョン(?!アップ)|リリース|追加された|削除|廃止|\\d+\\.\\d{2}\\.\\d{2}\")  # 「バージョンアップ手順書」は対象外\nUNSTATED_RE = re.compile(r\"(明記|記載)(は|が|も)?(見つかりません|ありません|されていません|されておりません|無い|ない)|明記なし|記載なし\")\nVALUE_RE = re.compile(r\"\\d+(?:\\.\\d+)?\\s*(?:dBm|dB|nm|W|VA|kg|mm|Gbps|Mbps|V|A|℃|ページ)|`|show |configure \")\n\n\ndef is_not_found(body):\n    \"\"\"「記載なし」だけの回答か。値やコマンドを答えたうえで「mWでの記載はありません」等と添えた回答は記載なしにしない\"\"\"\n    b = (body or \"\").strip()\n    if re.match(r\"^(登録資料に)?(該当する)?(記載|情報)(が|は)(見つかりません|ありません)\", b):\n        return True\n    return bool(NF_RE.search(b)) and len(b) < 160 and not VALUE_RE.search(b)\n\n\ndef clean(text):\n    t = re.sub(r\"<think>.*?</think>\", \"\", text or \"\", flags=re.S)\n    t = t.replace(\"<think>\", \"\").replace(\"</think>\", \"\")\n    t = re.sub(r\"^\\s*(analysis|assistant|final)\\s*:?\", \"\", t, flags=re.I)\n    # 先頭に英語の検討メモが漏れた場合は、最初の日本語/見出し行まで削る\n    if re.match(r\"\\s*(We need|We must|We should|The user|Let's|Let us|I need|I will|According to|Okay|OK,)\", t):\n        m = re.search(r\"(【回答\\d+】|^[ \\t]*[ぁ-んァ-ヶ一-龥【#*|].*$)\", t, flags=re.M)\n        t = t[m.start():] if m else \"\"\n    return t.strip()\n\n\ndef split_answers(t, n):\n    pieces = re.split(r\"(?:^|\\n)\\s*[#*]*\\s*【回答\\s*(\\d+)\\s*】[#*]*\\s*\", \"\\n\" + t)\n    found = {}\n    for i in range(1, len(pieces) - 1, 2):\n        try:\n            found[int(pieces[i])] = pieces[i + 1].strip()\n        except ValueError:\n            pass\n    if not found and n == 1 and t.strip():\n        found[1] = t.strip()\n    return found\n\n\ndef norm_ref(s):\n    return re.sub(r\"[\\s　()（）\\[\\]［］_\\-‐]\", \"\", s or \"\").lower()\n\n\ndef fix_signs(ans, sources):\n    \"\"\"資料の「0〜+5 dBm」を LLM が「0〜5 dBm」と書いた場合に、資料どおりの符号に戻す\"\"\"\n    for s in sources:\n        for sv in s.get(\"signed\", []):\n            a, b, unit = sv.split(\"|\")\n            ans = re.sub(r\"(?<![\\d.+\\-])%s\\s*[〜~～\\-–]\\s*%s\\s*%s\" % (re.escape(a), re.escape(b), unit),\n                         \"%s〜+%s %s\" % (a, b, unit), ans)\n    return ans\n\n\ndef fix_refs(ans, sources, models=None):\n    \"\"\"参照行を検証して整える。資料にない出典は除き、無ければ上位の出典を付与する。\n    複数の型番を扱う質問(比較など)は、型番ごとに少なくとも1つの出典を付ける\"\"\"\n    body_lines, cited = [], []\n    for line in ans.splitlines():\n        stripped = line.strip()\n        m = re.match(r\"^[*>\\-\\s]*(参照|出典|参考)\\s*[:：]\\s*(.*)$\", stripped)\n        if m:\n            cited += [x.strip() for x in re.split(r\"[、,／/]|\\s{2,}\", m.group(2)) if x.strip()]\n            continue\n        for mm in re.finditer(r\"【出典:\\s*([^|】]+?)\\s*(?:\\|\\s*([^】]+))?】\", line):\n            cited.append((mm.group(1) + \" \" + (mm.group(2) or \"\")).strip())\n        line = re.sub(r\"【出典:[^】]*】\", \"\", line)\n        body_lines.append(line)\n    body = \"\\n\".join(body_lines).strip()\n    if not body or is_not_found(body):\n        return body if body else NOT_FOUND\n    valid = []\n    # 同じ資料が複数ページあるときは、ページ(シート)が分かるものを優先して照合する\n    ordered = sorted(sources, key=lambda s: 0 if s.get(\"page\") else 1)\n    for c in cited:\n        cn = norm_ref(re.sub(r\"p\\.?\\s*\\d+|\\d+ページ.*\", \"\", c))\n        for s in ordered:\n            if cn and (cn in norm_ref(s[\"src\"]) or norm_ref(s[\"src\"]) in cn):\n                ref = s[\"ref\"]\n                pm = re.search(r\"p\\.?\\s*(\\d+)|(\\d+)ページ\", c)\n                if pm:\n                    ref = \"%s p.%s\" % (s[\"src\"], pm.group(1) or pm.group(2))\n                if ref not in valid:\n                    valid.append(ref)\n                break\n    # Excel 資料の参照にシート名が無いときは、同じ資料のシート名付きの検索結果から補う\n    for i, v in enumerate(valid):\n        if re.search(r\"\\.xlsx?$\", v, re.I):\n            alt = next((s[\"ref\"] for s in sources if s.get(\"page\") and v == s[\"src\"]), None)\n            if alt:\n                valid[i] = alt\n    valid = list(dict.fromkeys(valid))\n    if not valid and sources:\n        valid = [sources[0][\"ref\"]]\n    hbody = re.sub(r\"[‐‑‒–—―−]\", \"-\", body)  # LLM が型番・資料名に使う全角/特殊ハイフンを揃えて照合する\n    # 本文で資料名を挙げているのに参照に無い場合は、その資料の出典も付ける\n    for s in ordered:\n        stem = re.sub(r\"\\.(pdf|xlsx?|docx?|txt|md)$\", \"\", s[\"src\"], flags=re.I)\n        if len(stem) >= 6 and norm_ref(stem) in norm_ref(hbody) and not any(v.startswith(s[\"src\"]) for v in valid):\n            valid.append(s[\"ref\"])\n    # 本文に「資料名 の Nページ」とあるのに参照のページが違う場合は、本文のページに合わせる\n    for i, v in enumerate(valid):\n        m = re.match(r\"(.+?) p\\.(\\d+)$\", v)\n        if not m:\n            continue\n        stem = re.sub(r\"\\.(pdf|xlsx?)$\", \"\", m.group(1), flags=re.I)\n        pages = re.findall(r\"%s[^\\n]{0,20}?(?:の\\s*)?(?:(\\d+)\\s*ページ|p\\.\\s*(\\d+))\" % re.escape(stem).replace(\"\\\\-\", \"[-‐‑]\"), hbody)\n        pg = [a or b for a, b in pages]\n        if pg and m.group(2) not in pg:\n            valid[i] = \"%s p.%s\" % (m.group(1), pg[0])\n    valid = list(dict.fromkeys(valid))\n    if models and len(models) >= 2:\n        for m in models:\n            covered = any(m in s.get(\"models\", []) for s in sources for v in valid if v.startswith(s[\"src\"]))\n            extra = next((s[\"ref\"] for s in sources if m in s.get(\"models\", [])), None)\n            if not covered and extra and extra not in valid:\n                valid.append(extra)\n    if valid:\n        body += \"\\n\\n参照: \" + \" ／ \".join(valid)\n    return body\n\n\ndef fallback(sources):\n    if not sources:\n        return NOT_FOUND\n    s = sources[0]\n    return (\"(回答の自動生成に失敗したため、検索で見つかった該当箇所をそのまま表示します。内容は原本でご確認ください)\\n> \"\n            + s[\"excerpt\"].replace(\"\\n\", \"\\n> \") + \"\\n\\n参照: \" + s[\"ref\"])\n\n\ndef main(text: str, plan_json: str, meta_json: str, prefix: str) -> dict:\n    try:\n        plan = json.loads(plan_json or \"{}\")\n        meta = json.loads(meta_json or \"[]\")\n    except Exception:\n        plan, meta = {}, []\n    parts = plan.get(\"parts\", [])\n    rag_count = len([p for p in parts if p.get(\"type\") == \"rag\"])\n    answers = split_answers(clean(text), rag_count)\n    # LLM が固定回答の質問も含めて元の質問の番号で【回答n】を振った場合は、元の番号で対応付ける\n    if answers and max(answers) > rag_count and max(answers) <= len(parts):\n        answers = {sum(1 for q in parts[:i + 1] if q.get(\"type\") == \"rag\"): answers.get(i + 1, \"\")\n                   for i, q in enumerate(parts) if q.get(\"type\") == \"rag\"}\n    out, ri = [], 0\n    for p in parts:\n        if p.get(\"type\") == \"rag\":\n            ri += 1\n            srcs = meta[ri - 1][\"sources\"] if ri - 1 < len(meta) else []\n            a = answers.get(ri, \"\").strip()\n            a = fix_refs(fix_signs(a, srcs), srcs, p.get(\"models\")) if a else fallback(srcs)\n            vers = re.findall(r\"(\\d+\\.\\d{2}\\.\\d{2})\", p.get(\"text\", \"\"))\n            if len(vers) >= 2 and \"\\n参照: \" in a:\n                have = a.split(\"\\n参照: \")[-1]\n                add = [next((s[\"ref\"] for s in srcs if \"Ver.%s\" % v in s[\"src\"]), \"\") for v in vers]\n                add = [x for x in add if x and x.split(\" p.\")[0] not in have]\n                if add:\n                    a += \" ／ \" + \" ／ \".join(add)\n            if p.get(\"version\") and VERSION_Q_RE.search(p.get(\"text\", \"\")):\n                # バージョン(差分・追加・削除)の質問: 参照を付けられない回答は「関連記載なし」とする。\n                # 「どのバージョンで追加されたか」を問う質問は、資料に明記が無い旨の回答(関連しそうな記載の紹介を含む)も同じ扱いにする\n                body_only = a.split(\"\\n\\n参照: \")[0]\n                unstated = bool(ASK_VERSION_RE.search(p.get(\"text\", \"\"))) and bool(UNSTATED_RE.search(body_only))\n                if \"参照: \" not in a or unstated:\n                    a = NO_RELATED\n            if p.get(\"note\"):\n                a = p[\"note\"] + \"\\n\" + a\n            if p.get(\"tail\"):\n                a += \"\\n\\n\" + p[\"tail\"]\n        else:\n            a = p.get(\"answer\", NOT_FOUND)\n        out.append((p.get(\"text\", \"\"), a))\n    if len(out) == 1:\n        final = out[0][1]\n    else:\n        final = \"\\n\\n\".join(\"### %d. %s\\n%s\" % (i + 1, q, a) for i, (q, a) in enumerate(out))\n    return {\"answer\": ((prefix or \"\") + final).strip()}\n"
+        code_language: python3
+        desc: 思考タグ除去・質問別回答の結合・参照(元ファイル名+ページ)の検証と補完
+        outputs:
+          answer:
+            children: null
+            type: string
+        selected: false
+        title: 回答整形
+        type: code
+        variables:
+        - value_selector:
+          - '1030'
+          - text
+          variable: text
+        - value_selector:
+          - '1002'
+          - plan_json
+          variable: plan_json
+        - value_selector:
+          - '1020'
+          - meta_json
+          variable: meta_json
+        - value_selector:
+          - '1002'
+          - fixed_answer
+          variable: prefix
+      height: 98
+      id: '1040'
+      position:
+        x: 2740
+        y: 460
+      positionAbsolute:
+        x: 2740
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1002'
+          - new_pending
+          variable_selector:
+          - conversation
+          - pending_question
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1002'
+          - new_last_model
+          variable_selector:
+          - conversation
+          - last_model
+          write_mode: over-write
+        selected: false
+        title: 会話変数の更新
+        type: assigner
+        version: '2'
+      height: 112
+      id: '1003'
+      position:
+        x: 340
+        y: 120
+      positionAbsolute:
+        x: 340
+        y: 120
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1002.fixed_answer#}}'
+        desc: ''
+        selected: false
+        title: 回答(固定応答)
+        type: answer
+        variables: []
+      height: 105
+      id: '1005'
+      position:
+        x: 1000
+        y: 40
+      positionAbsolute:
+        x: 1000
+        y: 40
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1040.answer#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 105
+      id: '1050'
+      position:
+        x: 3040
+        y: 460
+      positionAbsolute:
+        x: 3040
+        y: 460
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: -21.974555945104385
+      y: 366.2513174373348
+      zoom: 0.7917047464637369
+  rag_pipeline_variables: []
